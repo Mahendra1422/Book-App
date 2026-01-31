@@ -1,0 +1,31 @@
+<h1>➕ Add New Book</h1>
+
+<form action="/books" method="POST" class="book-form">
+
+    <div class="form-group">
+        <label>Book Name *</label>
+        <input type="text" name="name" required>
+    </div>
+
+    <div class="form-group">
+        <label>Description *</label>
+        <textarea name="description" required maxlength="2000"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Author *</label>
+        <input type="text" name="author" required>
+    </div>
+
+    <div class="form-group">
+        <label>Publish Date</label>
+        <input type="date" name="publishDate">
+        <small style="color: #666; font-size: 0.9em;">Optional: Select the publication date (ISO format)</small>
+    </div>
+
+    <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button type="submit" class="btn">Save Book</button>
+        <a href="/books" class="btn" style="background: #6c757d;">Cancel</a>
+    </div>
+
+</form>
