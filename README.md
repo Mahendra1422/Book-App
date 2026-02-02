@@ -11,6 +11,7 @@ A minimal RESTful API for managing books built with Node.js, Express, and MongoD
 - ✅ Pagination (default: 10 per page, max: 50)
 - ✅ Sorting by name, author, or publishDate (ascending/descending)
 - ✅ Web interface for easy book management
+- ✅ Interactive API testing tool (mini Postman UI)
 - ✅ RESTful API endpoints
 
 ## Tech Stack
@@ -194,6 +195,7 @@ Returns server status.
 - **Homepage**: `http://localhost:3000/` - Welcome page with navigation
 - **View Books**: `http://localhost:3000/books` - Browse, search, and filter books
 - **Create Book**: `http://localhost:3000/books/create` - Add a new book via form
+- **API Tester**: `http://localhost:3000/test` - Interactive API testing tool (mini Postman UI)
 
 ## Data Model
 
@@ -267,6 +269,19 @@ const searchResponse = await fetch(
 const data = await searchResponse.json();
 ```
 
+## API Documentation
+
+The API is documented using OpenAPI 3.0 specification. The OpenAPI file (`openapi.yaml`) can be imported into:
+- **Postman**: Import the `openapi.yaml` file
+- **Insomnia**: Import the `openapi.yaml` file
+- **Swagger UI**: Use any OpenAPI viewer
+
+**OpenAPI File**: `openapi.yaml` in the root directory
+
+The specification includes:
+- **POST /books** - Create book endpoint
+- **GET /books** - Explore books with all query parameters (search, filter, pagination, sorting)
+
 ## Project Structure
 
 ```
@@ -291,6 +306,7 @@ Book-API/
 │   ├── app.js                 # Express app setup
 │   └── server.js              # Server entry point
 ├── .env                       # Environment variables
+├── openapi.yaml              # OpenAPI 3.0 specification
 ├── package.json
 └── README.md
 ```
@@ -310,6 +326,20 @@ Book-API/
 
 Change the `PORT` in your `.env` file to a different port (e.g., 3001).
 
-## License
+## API Testing Tool
 
-ISC
+The application includes an interactive API testing interface at `/test` that provides a mini Postman-like experience:
+
+- **Test GET requests** with query parameters (search, filter, pagination, sorting)
+- **Test POST requests** with JSON body
+- **View responses** with formatted JSON output
+- **Live books list** that automatically refreshes
+
+**Access the tester:** `http://localhost:3000/test`
+
+This tool is perfect for:
+- Testing API endpoints without external tools
+- Learning the API structure
+- Quick debugging and development
+- Demonstrating API capabilities
+

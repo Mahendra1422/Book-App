@@ -1,0 +1,202 @@
+openapi: 3.0.0
+info:
+  title: Books API
+  description: A minimal RESTful API for managing books with search, filtering, pagination, and sorting capabilities.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /books:
+    post:
+      summary: Create a new book
+      description: Creates a new book and returns the created entity with server-generated ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - author
+              properties:
+                name:
+                  type: string
+                  description: Book name
+                  example: "The Great Gatsby"
+                description:
+                  type: string
+                  description: Book description (max 2000 characters)
+                  maxLength: 2000
+                  example: "A classic American novel set in the Jazz Age"
+                author:
+                  type: string
+                  description: Author name
+                  example: "F. Scott Fitzgerald"
+                publishDate:
+                  type: string
+                  format: date
+                  description: Publication date in ISO format (YYYY-MM-DD)
+                  example: "1925-04-10"
+      responses:
+        '201':
+          description: Book created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "name, description and author are required"
+
+    get:
+      summary: Explore books (Search & Filter)
+      description: Returns a paginated list of books with support for search, filtering, and sorting.
+      parameters:
+        - name: search
+          in: query
+          description: Text search in name and description (case-insensitive, substring)
+          required: false
+          schema:
+            type: string
+          example: "novel"
+        - name: author
+          in: query
+          description: Filter by exact author name (case-insensitive)
+          required: false
+          schema:
+            type: string
+          example: "George Orwell"
+        - name: from
+          in: query
+          description: Filter by publish date (from, inclusive) - ISO date format
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "1920-01-01"
+        - name: to
+          in: query
+          description: Filter by publish date (to, inclusive) - ISO date format
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "1950-12-31"
+        - name: page
+          in: query
+          description: Page number (default: 1)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - name: limit
+          in: query
+          description: Items per page (default: 10, max: 50)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+          example: 10
+        - name: sortBy
+          in: query
+          description: Sort field
+          required: false
+          schema:
+            type: string
+            enum: [name, author, publishDate, createdAt]
+            default: createdAt
+          example: "name"
+        - name: order
+          in: query
+          description: Sort order
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+          example: "asc"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BooksResponse'
+
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Server-generated book ID
+          example: "507f1f77bcf86cd799439011"
+        name:
+          type: string
+          example: "The Great Gatsby"
+        description:
+          type: string
+          example: "A classic American novel set in the Jazz Age"
+        author:
+          type: string
+          example: "F. Scott Fitzgerald"
+        publishDate:
+          type: string
+          format: date-time
+          nullable: true
+          example: "1925-04-10T00:00:00.000Z"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-01-20T10:30:00.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-01-20T10:30:00.000Z"
+      required:
+        - _id
+        - name
+        - description
+        - author
+        - createdAt
+        - updatedAt
+
+    BooksResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          description: Total number of books matching the query
+          example: 25
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
+      required:
+        - page
+        - limit
+        - total
+        - results
+

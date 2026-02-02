@@ -1,24 +1,44 @@
+<div style="margin-bottom: 15px;">
+    <a href="/"
+        style="display: inline-block; padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px;">←
+        Back to Home</a>
+</div>
+
 <h1>📚 Books</h1>
 
-<div style="margin-bottom: 20px;">
+<div style="margin-bottom: 20px; display: flex; gap: 10px;">
     <a href="/books/create" class="btn">Add New Book</a>
+    <a href="/test" class="btn" style="background: #667eea;">🧪 Test API</a>
 </div>
 
 <form method="GET" action="/books" style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
-        <input type="text" name="search" placeholder="Search (name/description)" value="<%= typeof search !== 'undefined' ? search : '' %>">
-        <input type="text" name="author" placeholder="Filter by author" value="<%= typeof author !== 'undefined' ? author : '' %>">
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+        <input type="text" name="search" placeholder="Search (name/description)"
+            value="<%= typeof search !== 'undefined' ? search : '' %>">
+
+        <input type="text" name="author" placeholder="Filter by author"
+            value="<%= typeof author !== 'undefined' ? author : '' %>">
+
         <input type="date" name="from" placeholder="From date" value="<%= typeof from !== 'undefined' ? from : '' %>">
+
         <input type="date" name="to" placeholder="To date" value="<%= typeof to !== 'undefined' ? to : '' %>">
+
         <select name="sortBy">
-            <option value="createdAt" <%= typeof sortBy !== 'undefined' && sortBy === 'createdAt' ? 'selected' : '' %>>Sort by Date</option>
-            <option value="name" <%= typeof sortBy !== 'undefined' && sortBy === 'name' ? 'selected' : '' %>>Sort by Name</option>
-            <option value="author" <%= typeof sortBy !== 'undefined' && sortBy === 'author' ? 'selected' : '' %>>Sort by Author</option>
-            <option value="publishDate" <%= typeof sortBy !== 'undefined' && sortBy === 'publishDate' ? 'selected' : '' %>>Sort by Publish Date</option>
+            <option value="createdAt" <%=typeof sortBy !=='undefined' && sortBy==='createdAt' ? 'selected' : '' %>>Sort
+                by Date
+            </option>
+            <option value="name" <%=typeof sortBy !=='undefined' && sortBy==='name' ? 'selected' : '' %>>Sort by Name
+            </option>
+            <option value="author" <%=typeof sortBy !=='undefined' && sortBy==='author' ? 'selected' : '' %>>Sort by
+                Author</option>
+            <option value="publishDate" <%=typeof sortBy !=='undefined' && sortBy==='publishDate' ? 'selected' : '' %>
+                >Sort by Publish Date</option>
         </select>
         <select name="order">
-            <option value="asc" <%= typeof order !== 'undefined' && order === 'asc' ? 'selected' : '' %>>Ascending</option>
-            <option value="desc" <%= typeof order !== 'undefined' && order === 'desc' ? 'selected' : '' %>>Descending</option>
+            <option value="asc" <%=typeof order !=='undefined' && order==='asc' ? 'selected' : '' %>>Ascending</option>
+            <option value="desc" <%=typeof order !=='undefined' && order==='desc' ? 'selected' : '' %>>Descending
+            </option>
         </select>
     </div>
     <div style="display: flex; gap: 10px;">
@@ -27,7 +47,7 @@
     </div>
 </form>
 
-<% if (books && books.length > 0) { %>
+<% if (books && books.length> 0) { %>
     <table>
         <thead>
             <tr>
@@ -38,20 +58,26 @@
             </tr>
         </thead>
         <tbody>
-            <% books.forEach(book => { %>
+            <% books.forEach(book=> { %>
                 <tr>
-                    <td><strong><%= book.name %></strong></td>
-                    <td><%= book.author %></td>
-                    <td><%= book.description %></td>
+                    <td><strong>
+                            <%= book.name %>
+                        </strong></td>
+                    <td>
+                        <%= book.author %>
+                    </td>
+                    <td>
+                        <%= book.description %>
+                    </td>
                     <td>
                         <% if (book.publishDate) { %>
                             <%= new Date(book.publishDate).toISOString().split('T')[0] %>
-                        <% } else { %>
-                            -
-                        <% } %>
+                                <% } else { %>
+                                    -
+                                    <% } %>
                     </td>
                 </tr>
-            <% }); %>
+                <% }); %>
         </tbody>
     </table>
 
@@ -77,6 +103,6 @@
             <% } %>
         </div>
     </div>
-<% } else { %>
-    <p>No books found. <a href="/books/create">Add your first book</a></p>
-<% } %>
+    <% } else { %>
+        <p>No books found. <a href="/books/create">Add your first book</a></p>
+        <% } %>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Books API Tester</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #555;
+      margin-top: 30px;
+    }
+    .request-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .request-box select,
+    .request-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .request-box textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      min-height: 100px;
+      font-family: monospace;
+    }
+    .request-box button {
+      background: #667eea;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .request-box button:hover {
+      background: #5568d3;
+    }
+    pre {
+      background: #282c34;
+      color: #abb2bf;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    button {
+      background: #6c757d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    button:hover {
+      background: #5a6268;
+    }
+  </style>
+</head>
+<body>
+
+<div style="margin-bottom: 20px;">
+  <a href="/" style="display: inline-block; padding: 8px 16px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 10px;">← Back to Home</a>
+</div>
+
+<h1>Books API Tester</h1>
+
+<div class="request-box">
+  <select id="method" onchange="toggleBodyField()">
+    <option>GET</option>
+    <option>POST</option>
+  </select>
+
+  <input
+    id="url"
+    value="/books"
+    placeholder="/books or /books?search=novel&author=George Orwell"
+  />
+
+  <textarea id="body" placeholder='JSON Body (POST only)\nExample:\n{\n  "name": "Book Name",\n  "description": "Book description",\n  "author": "Author Name",\n  "publishDate": "2024-01-15"\n}' style="display: none;"></textarea>
+
+  <button onclick="sendRequest()">Send Request</button>
+</div>
+
+<h2>Response</h2>
+<pre id="response">Click "Send Request" to see response...</pre>
+
+<script>
+function toggleBodyField() {
+  const method = document.getElementById("method").value;
+  const bodyField = document.getElementById("body");
+  if (method === "POST") {
+    bodyField.style.display = "block";
+  } else {
+    bodyField.style.display = "none";
+    bodyField.value = ""; // Clear body for GET requests
+  }
+}
+
+async function sendRequest() {
+  const method = document.getElementById("method").value;
+  const url = document.getElementById("url").value;
+  const body = document.getElementById("body").value;
+
+  const options = {
+    method,
+    headers: { "Content-Type": "application/json" }
+  };
+
+  if (method === "POST" && body) {
+    try {
+      options.body = JSON.stringify(JSON.parse(body));
+    } catch (e) {
+      document.getElementById("response").textContent = "Error: Invalid JSON in body\n" + e.message;
+      return;
+    }
+  }
+
+  try {
+    const res = await fetch(url, options);
+    const text = await res.text();
+    let formattedText = text;
+    
+    // Try to format as JSON if possible
+    try {
+      const json = JSON.parse(text);
+      formattedText = JSON.stringify(json, null, 2);
+    } catch (e) {
+      // Not JSON, use as is
+    }
+
+    document.getElementById("response").textContent = 
+      `Status: ${res.status} ${res.statusText}\n\n${formattedText}`;
+  } catch (error) {
+    document.getElementById("response").textContent = "Error: " + error.message;
+  }
+}
+
+</script>
+
+</body>
+</html>
+

@@ -130,132 +130,6 @@ const books = [
   },
 
   /* ---- 20 ---- */
-
-  {
-    name: "Wuthering Heights",
-    description: "A tragic love story on the Yorkshire moors.",
-    author: "Emily Brontë",
-    publishDate: new Date("1847-12-01")
-  },
-  {
-    name: "The Divine Comedy",
-    description: "A journey through Hell, Purgatory, and Heaven.",
-    author: "Dante Alighieri",
-    publishDate: new Date("1320-01-01")
-  },
-  {
-    name: "Dracula",
-    description: "A gothic horror novel about vampires.",
-    author: "Bram Stoker",
-    publishDate: new Date("1897-05-26")
-  },
-  {
-    name: "Frankenstein",
-    description: "A scientist creates a living monster.",
-    author: "Mary Shelley",
-    publishDate: new Date("1818-01-01")
-  },
-  {
-    name: "The Shining",
-    description: "A family haunted in a remote hotel.",
-    author: "Stephen King",
-    publishDate: new Date("1977-01-28")
-  },
-  {
-    name: "It",
-    description: "A shape-shifting evil terrorizes a town.",
-    author: "Stephen King",
-    publishDate: new Date("1986-09-15")
-  },
-  {
-    name: "Dune",
-    description: "Politics, power, and prophecy on a desert planet.",
-    author: "Frank Herbert",
-    publishDate: new Date("1965-08-01")
-  },
-  {
-    name: "The Da Vinci Code",
-    description: "A mystery involving secret societies.",
-    author: "Dan Brown",
-    publishDate: new Date("2003-03-18")
-  },
-  {
-    name: "Harry Potter and the Sorcerer's Stone",
-    description: "A boy discovers he is a wizard.",
-    author: "J.K. Rowling",
-    publishDate: new Date("1997-06-26")
-  },
-  {
-    name: "The Lord of the Rings",
-    description: "An epic quest to destroy a powerful ring.",
-    author: "J.R.R. Tolkien",
-    publishDate: new Date("1954-07-29")
-  },
-
-  /* ---- 30 ---- */
-
-  {
-    name: "The Hunger Games",
-    description: "A dystopian survival competition.",
-    author: "Suzanne Collins",
-    publishDate: new Date("2008-09-14")
-  },
-  {
-    name: "The Fault in Our Stars",
-    description: "A love story between two cancer patients.",
-    author: "John Green",
-    publishDate: new Date("2012-01-10")
-  },
-  {
-    name: "Gone Girl",
-    description: "A psychological thriller about marriage.",
-    author: "Gillian Flynn",
-    publishDate: new Date("2012-06-05")
-  },
-  {
-    name: "The Book Thief",
-    description: "A story narrated by Death during WWII.",
-    author: "Markus Zusak",
-    publishDate: new Date("2005-03-14")
-  },
-  {
-    name: "Life of Pi",
-    description: "A boy survives at sea with a tiger.",
-    author: "Yann Martel",
-    publishDate: new Date("2001-09-11")
-  },
-  {
-    name: "The Road",
-    description: "A father and son survive a post-apocalyptic world.",
-    author: "Cormac McCarthy",
-    publishDate: new Date("2006-09-26")
-  },
-  {
-    name: "The Giver",
-    description: "A society without pain or choice.",
-    author: "Lois Lowry",
-    publishDate: new Date("1993-04-26")
-  },
-  {
-    name: "The Handmaid's Tale",
-    description: "A dystopian future with enforced roles.",
-    author: "Margaret Atwood",
-    publishDate: new Date("1985-09-01")
-  },
-  {
-    name: "The Martian",
-    description: "An astronaut survives alone on Mars.",
-    author: "Andy Weir",
-    publishDate: new Date("2011-02-11")
-  },
-  {
-    name: "Ready Player One",
-    description: "A virtual reality treasure hunt.",
-    author: "Ernest Cline",
-    publishDate: new Date("2011-08-16")
-  }
-
-  /* ---- 50 TOTAL ---- */
 ];
 
 
@@ -285,8 +159,7 @@ const seedDatabase = async () => {
     const authors = [...new Set(books.map(b => b.author))];
     console.log(`\n📊 Summary:`);
     console.log(`   - Total books: ${insertedBooks.length}`);
-    console.log(`   - Unique authors: ${authors.length}`);
-    console.log(`   - Authors: ${authors.join(", ")}`);
+    console.log(`   - Authors: ${authors.length}`);
 
     process.exit(0);
   } catch (error) {
